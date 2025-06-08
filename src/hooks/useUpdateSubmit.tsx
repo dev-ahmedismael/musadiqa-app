@@ -1,15 +1,18 @@
 "use client";
 import { useSnackbarContext } from "@/context/SnackbarProvider";
-import { store } from "@/services/api";
-import { getCsrfCookie } from "@/services/cookies";
+import { update } from "@/services/api";
 import axios from "axios";
 
-export const useAuthSubmit = () => {
+export const useUpdateSubmit = () => {
   const { showMessage } = useSnackbarContext();
-  const submit = async (path: string, data: Record<string, unknown>) => {
+  const updateSubmit = async (
+    path: string,
+    id: string,
+    data: Record<string, unknown>
+  ) => {
     try {
-      await getCsrfCookie();
-      const res = await store(path, data);
+      const res = await update(path, id, data);
+      showMessage(res.data.message, "success");
       return res;
     } catch (error) {
       let message = "حدث خطأ غير متوقع";
@@ -22,5 +25,5 @@ export const useAuthSubmit = () => {
     }
   };
 
-  return { submit };
+  return { updateSubmit };
 };

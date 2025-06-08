@@ -19,7 +19,10 @@ api.interceptors.request.use((config) => {
 const fetcher = (url: string) => api.get(url).then((res) => res.data);
 
 export function useIndex(path: string, params: Record<string, unknown> = {}) {
-  const queryString = qs.stringify(params, { addQueryPrefix: true });
+  const queryString = qs.stringify(params, {
+    addQueryPrefix: true,
+    arrayFormat: "brackets",
+  });
   const key = `${path}${queryString}`;
   const { data, error, isLoading, mutate } = useSWR(key, fetcher);
   return { data, error, isLoading, mutate };
@@ -41,6 +44,6 @@ export function update(
   return api.put(`${path}/${id}`, payload);
 }
 
-export function destroy(path: string, id: string | number) {
-  return api.delete(`${path}/${id}`);
+export function destroy(path: string, ids: (string | number)[]) {
+  return api.delete(`${path}/batch`, { data: { ids } });
 }

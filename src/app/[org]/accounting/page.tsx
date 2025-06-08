@@ -1,10 +1,10 @@
 import { redirect } from "next/navigation";
 
-interface Props {
-  params: { org: string };
-}
-
-export default async function Accounting({ params }: Props) {
-  const { org } = await Promise.resolve(params);
-  redirect(`/${org}/accounting/accountant`);
+export default async function Accounting({
+  params,
+}: {
+  params: Promise<{ org: string }>;
+}) {
+  const { org } = await params;
+  redirect(`/${org}/accounting/sales`);
 }

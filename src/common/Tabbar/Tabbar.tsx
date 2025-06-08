@@ -7,14 +7,14 @@ import { useParams, useRouter, usePathname } from "next/navigation";
 
 interface TabItem {
   label: string;
-  href: string; // relative, e.g. "drafts"
+  href: string;
 }
 
 interface NavTabsProps {
   tabs: TabItem[];
 }
 
-export default function NavTabs({ tabs }: NavTabsProps) {
+export default function Tabbar({ tabs }: NavTabsProps) {
   const { org } = useParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -38,13 +38,19 @@ export default function NavTabs({ tabs }: NavTabsProps) {
       onChange={handleChange}
       aria-label="organization nav tabs"
       role="navigation"
-      className="bg-gray-50 border-b border-gray-300 mb-10"
     >
       {prefixedTabs.map((tab, index) => (
         <Tab
           key={index}
           label={tab.label}
-          sx={{ borderRight: "1px solid #d1d5dc", bgcolor: "white" }}
+          sx={{
+            height: "20px",
+            fontSize: "small",
+            bgcolor: index === activeIndex ? "primary.main" : "transparent",
+            color:
+              index === activeIndex ? "white !important" : "text.secondary",
+            transition: "all 0.2s ease-in-out",
+          }}
         />
       ))}
     </Tabs>

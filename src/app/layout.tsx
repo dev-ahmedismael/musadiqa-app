@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Cairo } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "./globals.css";
-import GlobalProviders from "@/providers/Global";
+import GlobalProviders from "@/context/Global";
 
-const cairo = Cairo({
-  subsets: ["latin", "arabic"],
+const roboto = Roboto({
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
@@ -23,7 +23,7 @@ export default function RootLayout({
       <head>
         <meta name="emotion-insertion-point" content="" />
       </head>
-      <body className={`${cairo.className} antialiased`}>
+      <body className={`${roboto.className} antialiased`}>
         <GlobalProviders>{children}</GlobalProviders>
       </body>
     </html>

@@ -1,5 +1,5 @@
 "use client";
-import { useSnackbarContext } from "@/providers/SnackbarProvider";
+import { useSnackbarContext } from "@/context/SnackbarProvider";
 import { store } from "@/services/api";
 import axios from "axios";
 

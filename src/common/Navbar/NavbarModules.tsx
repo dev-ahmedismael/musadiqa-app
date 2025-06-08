@@ -59,15 +59,18 @@ export default function NavbarModules() {
     <ClickAwayListener onClickAway={handleClickAway}>
       <Box
         color={"text.secondary"}
-        className="h-[56px] flex justify-center items-center border-s border-slate-300 px-5 cursor-pointer relative"
+        className="h-[53px] flex justify-center items-center border-s border-gray-300 px-5 cursor-pointer relative"
         onClick={handleClick}
       >
         <AppsIcon />
         {open && (
-          <Box className="absolute z-50 top-full left-0 bg-white p-2 rounded grid grid-cols-3 gap-5 border border-slate-300 w-max">
+          <Box className="absolute z-50 top-full left-0 bg-white p-2 rounded grid grid-cols-3 gap-5 border border-gray-300 w-max">
             {modules.map((m) => (
               <OrgLink key={m.id} href={m.route}>
-                <Box className="px-2 py-4 flex flex-col justify-center items-center gap-2 border border-transparent hover:border-slate-300 hover:text-teal-500 rounded">
+                <Box
+                  className="px-2 py-4 flex flex-col justify-center items-center gap-2 border border-transparent hover:border-gray-300 rounded"
+                  sx={{ "&:hover": { color: "primary.main" } }}
+                >
                   {m.icon}
                   <Typography fontSize={"small"}>{m.title}</Typography>
                 </Box>
