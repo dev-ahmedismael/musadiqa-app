@@ -1,10 +1,10 @@
 import CreatePageLayout from "@/common/Layouts/CreatePageLayout";
-import TaxForm from "@/forms/tax";
+import BranchForm from "@/forms/branch";
 
 export default function CreateNewBranch() {
   return (
-    <CreatePageLayout title="إضافة ضريبة جديدة">
-      <TaxForm />
+    <CreatePageLayout title="إضافة فرع">
+      <BranchForm />
     </CreatePageLayout>
   );
 }

@@ -8,7 +8,7 @@ export default function Empty() {
   const { cols } = state;
   return (
     <TableRow>
-      <TableCell colSpan={cols.length + 1}>
+      <TableCell colSpan={cols.length + 2}>
         <Box
           display={"flex"}
           flexDirection={"column"}

@@ -10,8 +10,10 @@ import {
 } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import ClearIcon from "@mui/icons-material/Clear";
-import { destroy } from "@/services/api";
+import { destroy, useIndex } from "@/services/api";
 import { useSpreadsheetContext } from "@/context/SpreadsheetContext";
+import { useSnackbarContext } from "@/context/SnackbarProvider";
+import axios from "axios";
 
 export type DeleteDialogProps = {
   ids: (string | number)[];
@@ -25,8 +27,29 @@ export default function DeleteConfirmDialog({
   isDeleteDialogOpen,
 }: DeleteDialogProps) {
   const { state } = useSpreadsheetContext();
+  const { showMessage } = useSnackbarContext();
+  const { mutate } = useIndex(state.path);
+
   const confirmDelete = async () => {
-    await destroy(state.path, ids).then(() => closeDeleteDialog());
+    try {
+      await destroy(state.path, ids)
+        .then((res) => {
+          showMessage(res.data.message, "success");
+        })
+        .then(() => {
+          closeDeleteDialog();
+          mutate();
+        });
+    } catch (error) {
+      let message = "حدث خطأ غير متوقع";
+
+      if (axios.isAxiosError(error)) {
+        message = error.response?.data?.message || error.message || message;
+      }
+
+      showMessage(message, "error");
+      closeDeleteDialog();
+    }
   };
 
   return (

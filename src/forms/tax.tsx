@@ -85,7 +85,7 @@ export default function TaxForm({ defaultValues, id }: Props) {
         />
       </FormControl>
 
-      <FormControl error={!!errors.name_ar}>
+      <FormControl error={!!errors.name_en}>
         <Controller
           control={control}
           name="name_en"

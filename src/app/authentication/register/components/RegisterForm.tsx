@@ -45,8 +45,11 @@ export default function RegisterForm() {
   const { submit } = useAuthSubmit();
 
   const onSubmit = async (data: RegisterFormInputs) => {
-    await submit("register", data);
-    redirect("/authentication/create-new-organization");
+    const result = await submit("register", data);
+
+    if (result) {
+      redirect("/authentication/create-new-organization");
+    }
   };
 
   return (

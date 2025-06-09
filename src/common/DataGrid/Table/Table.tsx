@@ -42,7 +42,7 @@ export default function Table({ cols, rows }: TableProps) {
               >
                 {cols.map((col) => (
                   <TableCell key={col.key} sx={{ color: "text.secondary" }}>
-                    {String(row[col.key])}
+                    {String(row[col.key] || "")}
                   </TableCell>
                 ))}
               </TableRow>

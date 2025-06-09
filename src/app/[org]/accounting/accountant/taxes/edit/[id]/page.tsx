@@ -3,6 +3,7 @@
 import CreatePageLayout from "@/common/Layouts/CreatePageLayout";
 import TaxForm, { TaxFormData } from "@/forms/tax";
 import { show } from "@/services/api";
+import { normalizeFormData } from "@/utils/normalizeFormData";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
 
@@ -27,7 +28,10 @@ export default function EditTax() {
 
   return (
     <CreatePageLayout title="تعديل الضريبة">
-      <TaxForm defaultValues={data} id={params.id as string} />
+      <TaxForm
+        defaultValues={data && normalizeFormData(data)}
+        id={params.id as string}
+      />
     </CreatePageLayout>
   );
 }

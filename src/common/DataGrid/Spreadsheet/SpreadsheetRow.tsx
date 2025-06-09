@@ -8,6 +8,7 @@ import {
   ClickAwayListener,
   Menu,
   MenuItem,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -20,6 +21,9 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { usePathname, useRouter } from "next/navigation";
 import DeleteConfirmDialog from "../DeleteConfirmDialog";
+import FitbitIcon from "@mui/icons-material/Fitbit";
+import CreateIcon from "@mui/icons-material/Create";
+import LockOutlineIcon from "@mui/icons-material/LockOutline";
 
 const SpreadsheetRow = React.memo(function SpreadsheetRow({
   row,
@@ -107,8 +111,9 @@ const SpreadsheetRow = React.memo(function SpreadsheetRow({
           dispatch({ type: "SET_DRAG_END_INDEX", payload: index });
         }
       }}
+      className={`${isRowSelected && "bg-green-100"}`}
     >
-      <td className="flex justify-center items-center border-b border-gray-300">
+      <td className="px-2 border-b border-gray-300">
         <Checkbox
           icon={<CheckCircleOutlineIcon />}
           checkedIcon={<CheckCircleIcon />}
@@ -118,6 +123,33 @@ const SpreadsheetRow = React.memo(function SpreadsheetRow({
             dispatch({ type: "TOGGLE_ROW_SELECTION", payload: index })
           }
         />
+      </td>
+
+      <td className="px-2 border-b border-gray-300">
+        <Box display={"flex"} alignItems={"center"} gap={2}>
+          {row["is_system"] == true && (
+            <Tooltip title="خاص بنظام مصدقة، لا يمكن حذفه.">
+              <Box>
+                <FitbitIcon color="primary" fontSize="small" />
+              </Box>
+            </Tooltip>
+          )}
+
+          {row["is_locked"] == true && (
+            <Tooltip title={row["lock_reason"] as string}>
+              <LockOutlineIcon color="error" fontSize="small" />
+            </Tooltip>
+          )}
+
+          <Tooltip title="تعديل">
+            <Box
+              onClick={() => editRow(row.id as string)}
+              className="cursor-pointer"
+            >
+              <CreateIcon color="warning" fontSize="small" />
+            </Box>
+          </Tooltip>
+        </Box>
       </td>
 
       {cols.map((col) => (

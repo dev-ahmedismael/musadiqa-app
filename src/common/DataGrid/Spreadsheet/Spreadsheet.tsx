@@ -46,6 +46,14 @@ export default function Spreadsheet() {
                 onChange={toggleAllRows}
               />
             </th>
+
+            <th
+              className="text-white py-1 w-[5px]"
+              style={{ backgroundColor: lightTheme.palette.primary.main }}
+            >
+              {" "}
+            </th>
+
             {cols.map((col) => (
               <SpreadsheetHeader key={col.key}>{col.label}</SpreadsheetHeader>
             ))}

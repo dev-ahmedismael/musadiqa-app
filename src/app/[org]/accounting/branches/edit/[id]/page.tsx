@@ -1,22 +1,23 @@
 "use client";
 
 import CreatePageLayout from "@/common/Layouts/CreatePageLayout";
-import TaxForm, { TaxFormData } from "@/forms/tax";
+import BranchForm, { BranchFormData } from "@/forms/branch";
 import { show } from "@/services/api";
+import { normalizeFormData } from "@/utils/normalizeFormData";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
 
 export default function EditBranch() {
   const params = useParams();
 
-  const [data, setData] = useState<undefined | TaxFormData>(undefined);
+  const [data, setData] = useState<undefined | BranchFormData>(undefined);
 
   React.useEffect(() => {
     const fetchData = async () => {
       if (!params.id) return;
       try {
-        const result = await show("tax-rates", params.id as string);
-        setData(result.data.data as TaxFormData);
+        const result = await show("branches", params.id as string);
+        setData(result.data.data as BranchFormData);
       } catch (error) {
         console.error("Failed to fetch tax rate", error);
       }
@@ -26,8 +27,11 @@ export default function EditBranch() {
   }, [params.id]);
 
   return (
-    <CreatePageLayout title="تعديل الضريبة">
-      <TaxForm defaultValues={data} id={params.id as string} />
+    <CreatePageLayout title="تعديل الفرع">
+      <BranchForm
+        defaultValues={data && normalizeFormData(data)}
+        id={params.id as string}
+      />
     </CreatePageLayout>
   );
 }
